@@ -1,4 +1,5 @@
 from ex2 import fetcher
+import time
 
 CALL_COUNT = 10
 
@@ -11,8 +12,16 @@ def benchmark(num):
     :return: функцию обёртку
     """
     def wrapper(func):
-        # put your code here
-        pass
+        def decorator(*args, **kwargs):
+            total_time = 0
+            for i in range(num):
+                start_time = time.time()
+                func(*args, **kwargs)
+                lead_time = time.time() - start_time
+                total_time += lead_time
+                print(f'Время выполнения: {lead_time}')
+            print(f'Cреднее время: {total_time / num}\n')
+        return decorator
     return wrapper
 
 
